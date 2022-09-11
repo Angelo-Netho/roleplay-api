@@ -17,4 +17,8 @@ export default class UsersController {
     const user = await User.create(userPayLoad)
     return response.created({ user })
   }
+
+  public async update({ request, response }: HttpContextContract) {
+    return response.ok({})
+  }
 }
