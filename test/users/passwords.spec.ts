@@ -1,4 +1,5 @@
 import Mail from '@ioc:Adonis/Addons/Mail'
+import Hash from '@ioc:Adonis/Core/Hash'
 import Database from '@ioc:Adonis/Lucid/Database'
 import { assert } from '@japa/preset-adonis'
 import mail from 'Config/mail'
@@ -64,6 +65,12 @@ test.group('Password', (group) => {
       .post('/reset-password')
       .send({ token, password: '123456' })
       .expect(204)
+
+    await user.refresh()
+    await Hash
+
+    const checkPassowrd = await Hash.verify(user.password, '123456')
+    assert.isTrue(checkPassowrd)
   })
 
   group.beforeEach(async () => {
